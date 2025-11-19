@@ -8,10 +8,6 @@ export const bottomTabStyles = StyleSheet.create({
     backgroundColor: colors.white,
     borderTopColor: colors.black10,
     borderTopWidth: 1,
-    // marginHorizontal: 20,
-
-    // top: -40,
-    // borderRadius: 681,
     ...Platform.select({
       ios: {
         ...ifIphoneX(
@@ -44,19 +40,20 @@ export const bottomTabStyles = StyleSheet.create({
     }),
   },
   tabBarIconStyle: {
+    marginBottom: 18,
     ...Platform.select({
       ios: {
         ...ifIphoneX(
           {
-            bottom: -0,
+            bottom: 0,
           },
           {
-            bottom: -0,
+            bottom: 0,
           },
         ),
       },
       android: {
-        bottom: -0,
+        bottom: 0,
       },
     }),
   },

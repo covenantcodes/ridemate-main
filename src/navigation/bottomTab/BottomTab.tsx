@@ -1,27 +1,31 @@
 import React from "react";
 import {View} from "react-native";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-import {
-  HOME,
-  EXPLORE,
-  FAVORITES,
-  PROFILE,
-} from "navigation/navigation.constants";
+import {HOME, WALLET, HISTORY, PROFILE} from "navigation/navigation.constants";
 import {TabNavigationParams} from "navigation/navigation.types";
 import Home from "screens/home/Home";
-import Explore from "screens/explore/Explore";
-import Favorites from "screens/favorites/Favorites";
+import Wallet from "screens/wallet/Wallet";
+import History from "screens/history/History";
 import Profile from "screens/profile/Profile";
 import HomeIcon from "components/shared/icons/bottomTabIcons/HomeIcon";
-import ExploreIcon from "components/shared/icons/bottomTabIcons/HomeIcon";
-import FavoritesIcon from "components/shared/icons/bottomTabIcons/HomeIcon";
-import ProfileIcon from "components/shared/icons/bottomTabIcons/HomeIcon";
+import WalletIcon from "components/shared/icons/bottomTabIcons/WalletIcon";
+
+import HistoryIcon from "components/shared/icons/bottomTabIcons/HistoryIcon";
+
 import {bottomTabStyles} from "./bottomTabStyles";
 import BottomTabText from "./BottomTabText";
-
+import BottomTabProfileImage from "./BottomTabProfileImage";
+import {useBottomNavigate} from "hooks/useBottomNavigate";
 const Tab = createBottomTabNavigator<TabNavigationParams>();
 
 const BottomTab = () => {
+  const {
+    navigateToHome,
+    navigateToWallet,
+    navigateToHistory,
+    navigateToProfile,
+  } = useBottomNavigate();
+
   return (
     <View style={{flex: 1}}>
       <Tab.Navigator
@@ -41,35 +45,49 @@ const BottomTab = () => {
               <HomeIcon color={color} focused={focused} size={24} />
             ),
           }}
-        />
-
-        <Tab.Screen
-          name={EXPLORE}
-          component={Explore}
-          options={{
-            tabBarLabel: ({color, focused}) => (
-              <BottomTabText color={color} focused={focused} title="Explore" />
-            ),
-            tabBarIcon: ({color, focused}) => (
-              <ExploreIcon color={color} focused={focused} size={24} />
-            ),
+          listeners={{
+            tabPress: e => {
+              e.preventDefault();
+              navigateToHome();
+            },
           }}
         />
 
         <Tab.Screen
-          name={FAVORITES}
-          component={Favorites}
+          name={WALLET}
+          component={Wallet}
           options={{
             tabBarLabel: ({color, focused}) => (
-              <BottomTabText
-                color={color}
-                focused={focused}
-                title="Favorites"
-              />
+              <BottomTabText color={color} focused={focused} title="Wallet" />
             ),
             tabBarIcon: ({color, focused}) => (
-              <FavoritesIcon color={color} focused={focused} size={24} />
+              <WalletIcon color={color} focused={focused} size={24} />
             ),
+          }}
+          listeners={{
+            tabPress: e => {
+              e.preventDefault();
+              navigateToWallet();
+            },
+          }}
+        />
+
+        <Tab.Screen
+          name={HISTORY}
+          component={History}
+          options={{
+            tabBarLabel: ({color, focused}) => (
+              <BottomTabText color={color} focused={focused} title="History" />
+            ),
+            tabBarIcon: ({color, focused}) => (
+              <HistoryIcon color={color} focused={focused} size={24} />
+            ),
+          }}
+          listeners={{
+            tabPress: e => {
+              e.preventDefault();
+              navigateToHistory();
+            },
           }}
         />
 
@@ -80,9 +98,13 @@ const BottomTab = () => {
             tabBarLabel: ({color, focused}) => (
               <BottomTabText color={color} focused={focused} title="Profile" />
             ),
-            tabBarIcon: ({color, focused}) => (
-              <ProfileIcon color={color} focused={focused} size={24} />
-            ),
+            tabBarIcon: () => <BottomTabProfileImage />,
+          }}
+          listeners={{
+            tabPress: e => {
+              e.preventDefault();
+              navigateToProfile();
+            },
           }}
         />
       </Tab.Navigator>

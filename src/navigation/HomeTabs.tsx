@@ -1,10 +1,10 @@
 // src/navigation/HomeTabs.tsx
 import React from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import * as ROUTES from "navigation/navigation.constants";
-import { TabNavigationParams } from "navigation/navigation.types";
+import {TabNavigationParams} from "navigation/navigation.types";
 import HomeScreen from "screens/home/Home";
-import MarketplaceScreen from "screens/marketplace/MarketPlace";
+import HistoryScreen from "screens/history/History";
 import ProfileScreen from "screens/profile/Profile";
 import HomeIcon from "components/shared/icons/bottomTabIcons/HomeIcon";
 import MarketPlaceIcon from "components/shared/icons/bottomTabIcons/MarketPlaceIcon";
@@ -17,30 +17,27 @@ const HomeTabs = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarStyle: {
-          // Custom styles
-        },
-      }}
-    >
+        tabBarStyle: {},
+      }}>
       <Tab.Screen
         name={ROUTES.HOME}
         component={HomeScreen}
         options={{
-          tabBarIcon: ({ focused }) => <HomeIcon focused={focused} />,
+          tabBarIcon: ({focused}) => <HomeIcon focused={focused} />,
         }}
       />
       <Tab.Screen
-        name={ROUTES.MARKETPLACE}
-        component={MarketplaceScreen}
+        name={ROUTES.HISTORY}
+        component={HistoryScreen}
         options={{
-          tabBarIcon: ({ focused }) => <MarketPlaceIcon focused={focused} />,
+          tabBarIcon: ({focused}) => <MarketPlaceIcon focused={focused} />,
         }}
       />
       <Tab.Screen
         name={ROUTES.PROFILE}
         component={ProfileScreen}
         options={{
-          tabBarIcon: ({ focused }) => <ProfileIcon focused={focused} />,
+          tabBarIcon: ({focused}) => <ProfileIcon focused={focused} />,
         }}
       />
     </Tab.Navigator>

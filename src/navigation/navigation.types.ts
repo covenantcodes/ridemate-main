@@ -14,14 +14,13 @@ export type MainStackParams = {
 
 export type TabNavigationParams = {
   [ROUTES.HOME]: undefined;
-  [ROUTES.MARKETPLACE]: undefined;
+  [ROUTES.HISTORY]: undefined;
   [ROUTES.PROFILE]: undefined;
-  [ROUTES.EXPLORE]: undefined;
-  [ROUTES.FAVORITES]: undefined;
+  [ROUTES.WALLET]: undefined;
 };
 
 export type AuthStackParams = {
-  // [ROUTES.ONBOARDING]: undefined;
+  [ROUTES.ONBOARDING]: undefined;
   [ROUTES.LOGIN]: undefined;
   [ROUTES.REGISTER]: undefined;
   // [ROUTES.FORGOT_PASSWORD]: undefined;

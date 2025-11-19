@@ -132,7 +132,7 @@ export type colorType =
   | "paragraph2";
 
 export const colors = {
-  primary: "#0d4af2ff",
+  primary: "#1A2A4F",
   primary4: "#0D80F20A",
   primary5: "#4DA6F7",
   primary6: "#0D80F21A",

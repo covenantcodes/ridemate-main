@@ -1,8 +1,8 @@
 import {
   HOME,
   HOME_TAB,
-  EXPLORE,
-  FAVORITES,
+  WALLET,
+  HISTORY,
   PROFILE,
 } from "navigation/navigation.constants";
 import {useAppNavigation} from "./useAppNavigation";
@@ -14,12 +14,12 @@ export const useBottomNavigate = () => {
     navigation.navigate(HOME_TAB, {screen: HOME});
   };
 
-  const navigateToExplore = () => {
-    navigation.navigate(HOME_TAB, {screen: EXPLORE});
+  const navigateToWallet = () => {
+    navigation.navigate(HOME_TAB, {screen: WALLET});
   };
 
-  const navigateToFavorites = () => {
-    navigation.navigate(HOME_TAB, {screen: FAVORITES});
+  const navigateToHistory = () => {
+    navigation.navigate(HOME_TAB, {screen: HISTORY});
   };
 
   const navigateToProfile = () => {
@@ -28,8 +28,8 @@ export const useBottomNavigate = () => {
 
   return {
     navigateToHome,
-    navigateToExplore,
-    navigateToFavorites,
+    navigateToWallet,
+    navigateToHistory,
     navigateToProfile,
   };
 };

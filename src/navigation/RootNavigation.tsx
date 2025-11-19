@@ -7,8 +7,7 @@ import NetworkModal from "components/shared/view/NetworkModal";
 import ScreenLoader from "components/shared/loader/ScreenLoader";
 
 const RootNavigation = () => {
-  // const accessToken = useAppSelector(state => state.auth.accessToken);
-  const accessToken = "1";
+  const accessToken = useAppSelector(state => state.login.accessToken);
   const {isLoading} = useAppSelector(state => state.app);
   const [networkStatus, setNetworkStatus] = useState(false);
 
@@ -25,9 +24,7 @@ const RootNavigation = () => {
   return (
     <>
       {isLoading && <ScreenLoader />}
-
       {networkStatus && <NetworkModal />}
-
       {accessToken ? <MainStack /> : <AuthStack />}
     </>
   );

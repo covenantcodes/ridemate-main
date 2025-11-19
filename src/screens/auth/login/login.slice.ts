@@ -1,78 +1,29 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IToken, IUser } from "types/apiTypes";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-interface authState {
-  user?: IUser | null;
-  token?: IToken | null;
-  loginDetails?: {
-    email: string;
-    name: string;
-    avatar: string | null;
-    tag: string;
-  } | null;
-  autoLoginDetails?: {
-    email: string;
-    password: string;
-  } | null;
+interface AuthState {
+  accessToken: string | null;
+  user: any | null;
 }
 
-const initialState: authState = {
+const initialState: AuthState = {
+  accessToken: null,
   user: null,
-  token: null,
-  loginDetails: null,
-  autoLoginDetails: null,
 };
 
-export const authSlice = createSlice({
-  name: "login",
+const authSlice = createSlice({
+  name: "auth",
   initialState,
   reducers: {
-    saveUser: (
-      state: authState,
-      { payload }: PayloadAction<{ user: IUser }>
-    ) => {
-      state.user = payload.user;
+    setAuth: (state, action: PayloadAction<{token: string; user: any}>) => {
+      state.accessToken = action.payload.token;
+      state.user = action.payload.user;
     },
-    saveToken: (
-      state: authState,
-      { payload }: PayloadAction<{ token: IToken }>
-    ) => {
-      state.token = payload.token;
-    },
-    logout: (state: authState) => {
+    clearAuth: state => {
+      state.accessToken = null;
       state.user = null;
-      state.token = null;
-      state.autoLoginDetails = null;
-    },
-    storeLoginDetails: (
-      state: authState,
-      { payload }: PayloadAction<authState>
-    ) => {
-      state.loginDetails = payload.loginDetails;
-    },
-    storeAutoLoginDetails: (
-      state: authState,
-      { payload }: PayloadAction<{ email: string; password: string }>
-    ) => {
-      state.autoLoginDetails = payload;
-    },
-    clearLoginDetails: (state) => {
-      state.loginDetails = null;
-    },
-    clearAutoLoginDetails: (state) => {
-      state.autoLoginDetails = null;
     },
   },
 });
 
-export const {
-  saveUser,
-  logout,
-  storeLoginDetails,
-  clearLoginDetails,
-  clearAutoLoginDetails,
-  storeAutoLoginDetails,
-  saveToken,
-} = authSlice.actions;
-
+export const {setAuth, clearAuth} = authSlice.actions;
 export default authSlice.reducer;

@@ -13,13 +13,29 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
+       
+      
       "supportsTablet": true,
       "bundleIdentifier": "com.covenantcodes.RideMate",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSLocationWhenInUseUsageDescription": "This app needs access to your location to show your position on the map and find rides near you.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "This app needs access to your location to show your position on the map and find rides near you."
+      },
+      "config": {
+        "googleMapsApiKey": "AIzaSyBe-E5Chhe9sjZodUcWHvlIjTLzArGG_T0"
       }
     },
     "android": {
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION"
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBe-E5Chhe9sjZodUcWHvlIjTLzArGG_T0"
+        }
+      },
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
