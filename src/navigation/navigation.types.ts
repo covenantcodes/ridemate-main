@@ -10,6 +10,17 @@ export type MainStackParams = {
   [ROUTES.HOME_TAB]: {screen?: keyof TabNavigationParams};
   [ROUTES.LOGIN]: undefined;
   [ROUTES.PRODUCT_DETAILS]: {packageId: string};
+  [ROUTES.VEHICLE_TYPE_SELECTION]: {
+    rideOption: any;
+    pickup: any;
+    destination: any;
+  };
+  [ROUTES.FINDING_ROUTE]: {
+    rideOption: any;
+    pickup: any;
+    destination: any;
+    vehicleType: any;
+  };
 };
 
 export type TabNavigationParams = {
@@ -23,8 +34,6 @@ export type AuthStackParams = {
   [ROUTES.ONBOARDING]: undefined;
   [ROUTES.LOGIN]: undefined;
   [ROUTES.REGISTER]: undefined;
-  // [ROUTES.FORGOT_PASSWORD]: undefined;
-  // [ROUTES.RESET_PASSWORD]: {token: string};
 };
 
 export type ScreenProps = NativeStackScreenProps<MainStackParams, "homeTab">;
@@ -43,13 +52,6 @@ export type MainStackNavigationProp = NativeStackNavigationProp<
   "homeTab"
 >;
 
-/**
- * Typing for screen navigation and route props
- */
-
-/**
- * NAVIGATION
- */
 export type AuthScreenNavigationProps<T extends keyof AuthStackParams> =
   NativeStackScreenProps<AuthStackParams, T>;
 export type AuthScreenNavigationRouteProps<T extends keyof AuthStackParams> =
@@ -58,18 +60,13 @@ export type ScreenNavigationProps<T extends keyof MainStackParams> =
   NativeStackScreenProps<MainStackParams, T>;
 export type ScreenNavigationRouteProps<T extends keyof MainStackParams> =
   RouteProp<MainStackParams, T>;
+
 export type TabScreenNavigationProps<T extends keyof TabNavigationParams> =
   NativeStackScreenProps<TabNavigationParams, T>;
 
-/**
- * @Usage Global typing the navigation hook
- */
-export interface RootStackParamsList
-  //   AuthStackParams,
-  extends TabNavigationParams {}
+export interface RootStackParamsList extends TabNavigationParams {}
 
 declare global {
-  // eslint-disable-next-line  @typescript-eslint/no-namespace
   namespace ReactNavigation {
     interface RootParamList extends RootStackParamsList {}
   }

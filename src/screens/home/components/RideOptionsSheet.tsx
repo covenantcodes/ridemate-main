@@ -2,25 +2,22 @@ import React from "react";
 import {View, ScrollView} from "react-native";
 import Text from "components/shared/text/Text";
 import TouchableComponent from "components/shared/touchable/Touchable";
-import MainIcon from "components/shared/icons/icon";
 import {FONT_WEIGHTS, FONTS_SIZES} from "constants/scaling";
 import {globalStyles} from "styles/globalStyles";
 import {colors} from "theme/themes";
 import {getSize} from "utils/unitScaling";
 import {appStyles} from "styles/appStyles";
 
-interface RideOption {
+interface RideType {
   id: string;
   name: string;
   description: string;
-  icon: string;
-  price: string;
-  time: string;
+  Icon: React.ComponentType<{width?: number; height?: number; color?: string}>;
 }
 
 interface RideOptionsSheetProps {
-  options: RideOption[];
-  onSelectOption: (option: RideOption) => void;
+  options: RideType[];
+  onSelectOption: (option: RideType) => void;
 }
 
 const RideOptionsSheet: React.FC<RideOptionsSheetProps> = ({
@@ -41,7 +38,7 @@ const RideOptionsSheet: React.FC<RideOptionsSheetProps> = ({
           paddingHorizontal: getSize(20),
           paddingTop: getSize(20),
           paddingBottom: getSize(30),
-          maxHeight: "40%",
+          maxHeight: "44%",
         },
         appStyles.shadow,
       ]}>
@@ -81,10 +78,15 @@ const RideOptionsSheet: React.FC<RideOptionsSheetProps> = ({
               globalStyles.mb1,
               {
                 borderRadius: getSize(12),
-                backgroundColor: colors.gray500,
+                backgroundColor: colors.primary550,
               },
             ]}>
-            <View style={[globalStyles.flexRow, globalStyles.alignItemsCenter]}>
+            <View
+              style={[
+                globalStyles.flexRow,
+                globalStyles.alignItemsCenter,
+                globalStyles.flex,
+              ]}>
               <View
                 style={[
                   globalStyles.flexCenter,
@@ -95,28 +97,23 @@ const RideOptionsSheet: React.FC<RideOptionsSheetProps> = ({
                     backgroundColor: colors.white,
                   },
                 ]}>
-                <MainIcon
-                  type="MaterialCommunityIcons"
-                  name={option.icon}
-                  size={getSize(24)}
-                  color={colors.primary}
-                />
+                {/* Render the icon component */}
+                <option.Icon width={28} height={28} color={colors.primary} />
               </View>
-              <View style={[globalStyles.ml1]}>
+              <View style={[globalStyles.ml1, globalStyles.flex]}>
                 <Text font={FONT_WEIGHTS.semiBold} size={FONTS_SIZES.S}>
                   {option.name}
                 </Text>
                 <Text
                   font={FONT_WEIGHTS.regular}
                   size={FONTS_SIZES.XS}
-                  color="gray600">
-                  {option.time} • {option.description}
+                  color="gray600"
+                  numberOfLines={2}
+                  ellipsizeMode="tail">
+                  {option.description}
                 </Text>
               </View>
             </View>
-            <Text font={FONT_WEIGHTS.bold} size={FONTS_SIZES.S}>
-              {option.price}
-            </Text>
           </TouchableComponent>
         ))}
       </ScrollView>

@@ -11,6 +11,7 @@ export type colorType =
   | "primary10"
   | "primary150"
   | "primary400"
+  | "primary550"
   | "primary900"
   | "secondary"
   | "primaryLight"
@@ -133,6 +134,7 @@ export type colorType =
 
 export const colors = {
   primary: "#1A2A4F",
+
   primary4: "#0D80F20A",
   primary5: "#4DA6F7",
   primary6: "#0D80F21A",
@@ -142,6 +144,7 @@ export const colors = {
   primary10: "#0071D9",
   primary900: "rgba(13, 128, 242, 0.9)",
   primary400: "#7CB9F8",
+  primary550: "#B2C9FF36",
 
   error: "#FC585A",
   error100: "#FEE4E2",

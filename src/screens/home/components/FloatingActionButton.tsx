@@ -9,9 +9,14 @@ import {appStyles} from "styles/appStyles";
 
 interface FloatingActionButtonProps {
   onPress: () => void;
-  iconType?: "MaterialIcons" | "MaterialCommunityIcons" | "Ionicons" | "Feather";
-  iconName: string;
+  iconType?:
+    | "MaterialIcons"
+    | "MaterialCommunityIcons"
+    | "Ionicons"
+    | "Feather";
+  iconName?: string;
   bottom?: number;
+  customIcon?: React.ReactNode;
 }
 
 const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
@@ -19,14 +24,11 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
   iconType = "MaterialIcons",
   iconName = "search",
   bottom = 40,
+  customIcon,
 }) => {
   return (
     <View
-      style={[
-        globalStyles.absolute,
-        globalStyles.alignSelfCenter,
-        {bottom},
-      ]}>
+      style={[globalStyles.absolute, globalStyles.alignSelfCenter, {bottom}]}>
       <TouchableComponent
         bounce
         onPress={onPress}
@@ -40,12 +42,16 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
             backgroundColor: colors.primary,
           },
         ]}>
-        <MainIcon
-          type={iconType}
-          name={iconName}
-          size={getSize(28)}
-          color={colors.white}
-        />
+        {customIcon ? (
+          customIcon
+        ) : (
+          <MainIcon
+            type={iconType}
+            name={iconName}
+            size={getSize(28)}
+            color={colors.white}
+          />
+        )}
       </TouchableComponent>
     </View>
   );

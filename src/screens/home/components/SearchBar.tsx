@@ -7,7 +7,6 @@ import {FONT_WEIGHTS, FONTS_SIZES} from "constants/scaling";
 import {globalStyles} from "styles/globalStyles";
 import {colors} from "theme/themes";
 import {getSize} from "utils/unitScaling";
-import {appStyles} from "styles/appStyles";
 
 interface SearchBarProps {
   onPress: () => void;
