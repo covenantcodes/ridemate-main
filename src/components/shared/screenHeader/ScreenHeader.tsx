@@ -1,10 +1,10 @@
-import { FONT_WEIGHTS, FONTS_SIZES } from "constants/scaling";
-import { useAppNavigation } from "hooks/useAppNaigation";
-import React, { ReactNode } from "react";
-import { StyleProp, View, ViewStyle } from "react-native";
-import { globalStyles } from "styles/globalStyles";
-import { colorType } from "theme/themes";
-import { fontWeightType } from "types/appTypes";
+import {FONT_WEIGHTS, FONTS_SIZES} from "constants/scaling";
+import {useAppNavigation} from "hooks/useAppNavigation";
+import React, {ReactNode} from "react";
+import {StyleProp, View, ViewStyle} from "react-native";
+import {globalStyles} from "styles/globalStyles";
+import {colorType} from "theme/themes";
+import {fontWeightType} from "types/appTypes";
 
 import BackArrowIcon from "../icons/appIcons/BackArrowIcon";
 import Text from "../text/Text";
@@ -38,7 +38,7 @@ const ScreenHeader = ({
   hideBackIcon,
   backIconColor,
 }: IScreenHeader) => {
-  const { navigation } = useAppNavigation();
+  const {navigation} = useAppNavigation();
 
   return (
     <View style={[containerStyle]}>

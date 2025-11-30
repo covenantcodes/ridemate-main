@@ -7,13 +7,15 @@ import {FONT_WEIGHTS, FONTS_SIZES} from "constants/scaling";
 import {globalStyles} from "styles/globalStyles";
 import {colors} from "theme/themes";
 import {getSize} from "utils/unitScaling";
-import {useRoute, useNavigation} from "@react-navigation/native";
+import {useRoute} from "@react-navigation/native";
+import ScreenHeader from "components/shared/screenHeader/ScreenHeader";
+import {useAppNavigation} from "hooks/useAppNavigation";
 
 const {width, height} = Dimensions.get("window");
 
 const FindingRoute = () => {
   const route = useRoute<any>();
-  const navigation = useNavigation();
+  const {navigation} = useAppNavigation();
   const {rideOption, pickup, destination, vehicleType} = route.params || {};
   const lottieRef = useRef<LottieView>(null);
 
@@ -45,11 +47,13 @@ const FindingRoute = () => {
 
   return (
     <Layout bgColor="white" noPadding>
+      <View style={[globalStyles.px2]}>
+        <ScreenHeader header="" />
+      </View>
       <View
         style={[
           globalStyles.flex,
-          globalStyles.flexCenter,
-          {backgroundColor: colors.white},
+          {alignItems: "center", backgroundColor: colors.white},
         ]}>
         {/* Animation */}
         <View
@@ -72,12 +76,7 @@ const FindingRoute = () => {
         </View>
 
         {/* Text Content */}
-        <View
-          style={[
-            globalStyles.alignItemsCenter,
-            globalStyles.px3,
-            {maxWidth: width * 0.85},
-          ]}>
+        <View style={[globalStyles.alignItemsCenter, globalStyles.px3]}>
           <Text
             font={FONT_WEIGHTS.bold}
             size={FONTS_SIZES.XXL}
@@ -92,102 +91,83 @@ const FindingRoute = () => {
             style={[globalStyles.textCenter, globalStyles.mb3]}>
             We're calculating the best route for your journey...
           </Text>
-
-          {/* Route Details */}
-          <View
-            style={[
-              globalStyles.w10,
-              globalStyles.px2,
-              globalStyles.py2,
-              {
-                backgroundColor: colors.primary4,
-                borderRadius: getSize(12),
-                borderWidth: 1,
-                borderColor: colors.gray200,
-              },
-            ]}>
-            <View style={[globalStyles.flexRow, globalStyles.mb1]}>
-              <Text
-                font={FONT_WEIGHTS.medium}
-                size={FONTS_SIZES.S}
-                color="gray600"
-                style={{flex: 1}}>
-                Ride Type:
-              </Text>
-              <Text font={FONT_WEIGHTS.semiBold} size={FONTS_SIZES.S}>
-                {rideOption?.name}
-              </Text>
-            </View>
-
-            <View style={[globalStyles.flexRow, globalStyles.mb1]}>
-              <Text
-                font={FONT_WEIGHTS.medium}
-                size={FONTS_SIZES.S}
-                color="gray600"
-                style={{flex: 1}}>
-                Vehicle:
-              </Text>
-              <Text font={FONT_WEIGHTS.semiBold} size={FONTS_SIZES.S}>
-                {vehicleType?.name}
-              </Text>
-            </View>
-
-            <View style={[globalStyles.flexRow]}>
-              <Text
-                font={FONT_WEIGHTS.medium}
-                size={FONTS_SIZES.S}
-                color="gray600"
-                style={{flex: 1}}>
-                From:
-              </Text>
-              <Text
-                font={FONT_WEIGHTS.semiBold}
-                size={FONTS_SIZES.S}
-                numberOfLines={1}
-                style={{flex: 1, textAlign: "right"}}>
-                {pickup?.name}
-              </Text>
-            </View>
-
-            <View style={[globalStyles.flexRow, globalStyles.mt1]}>
-              <Text
-                font={FONT_WEIGHTS.medium}
-                size={FONTS_SIZES.S}
-                color="gray600"
-                style={{flex: 1}}>
-                To:
-              </Text>
-              <Text
-                font={FONT_WEIGHTS.semiBold}
-                size={FONTS_SIZES.S}
-                numberOfLines={1}
-                style={{flex: 1, textAlign: "right"}}>
-                {destination?.name}
-              </Text>
-            </View>
-          </View>
         </View>
+      </View>
 
-        {/* Loading Dots */}
+      <View style={[globalStyles.px2, {marginBottom: 80}]}>
         <View
           style={[
-            globalStyles.flexRow,
-            globalStyles.justifyCenter,
-            globalStyles.mt3,
-            {gap: getSize(8)},
+            globalStyles.py2,
+            {
+              width: "100%",
+              backgroundColor: colors.primary4,
+              borderRadius: getSize(12),
+              borderWidth: 1,
+              borderColor: colors.gray200,
+            },
           ]}>
-          {[0, 1, 2].map(index => (
-            <View
-              key={index}
-              style={{
-                width: getSize(8),
-                height: getSize(8),
-                borderRadius: getSize(4),
-                backgroundColor: colors.primary,
-                opacity: 0.6,
-              }}
-            />
-          ))}
+          <View
+            style={[globalStyles.flexRow, globalStyles.mb1, globalStyles.px2]}>
+            <Text
+              font={FONT_WEIGHTS.medium}
+              size={FONTS_SIZES.S}
+              color="gray600"
+              style={{flex: 1}}>
+              Ride Type:
+            </Text>
+            <Text font={FONT_WEIGHTS.semiBold} size={FONTS_SIZES.S}>
+              {rideOption?.name}
+            </Text>
+          </View>
+
+          <View
+            style={[globalStyles.flexRow, globalStyles.mb1, globalStyles.px2]}>
+            <Text
+              font={FONT_WEIGHTS.medium}
+              size={FONTS_SIZES.S}
+              color="gray600"
+              style={{flex: 1}}>
+              Vehicle:
+            </Text>
+            <Text font={FONT_WEIGHTS.semiBold} size={FONTS_SIZES.S}>
+              {vehicleType?.name}
+            </Text>
+          </View>
+
+          <View style={[globalStyles.flexRow, globalStyles.px2]}>
+            <Text
+              font={FONT_WEIGHTS.medium}
+              size={FONTS_SIZES.S}
+              color="gray600"
+              style={{flex: 1}}>
+              From:
+            </Text>
+            <Text
+              font={FONT_WEIGHTS.semiBold}
+              size={FONTS_SIZES.S}
+              numberOfLines={1}
+              style={{flex: 1, textAlign: "right"}}>
+              {pickup?.name}
+            </Text>
+          </View>
+
+          <View
+            style={[globalStyles.flexRow, globalStyles.mt1, globalStyles.px2]}>
+            <Text
+              font={FONT_WEIGHTS.medium}
+              size={FONTS_SIZES.S}
+              color="gray600"
+              style={{flex: 1}}>
+              To:
+            </Text>
+            <Text
+              font={FONT_WEIGHTS.semiBold}
+              size={FONTS_SIZES.S}
+              numberOfLines={1}
+              style={{flex: 1, textAlign: "right"}}>
+              {destination?.name}
+            </Text>
+          </View>
         </View>
       </View>
     </Layout>

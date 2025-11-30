@@ -13,17 +13,14 @@ export interface IUser {
   phone: string;
   referralCode: string;
   referred: null | boolean;
-
+  userType: "user" | "driver";
   type: string;
   status: null | string;
   token: string;
-  //   kyc: userKyc | null | undefined;
   avatar: null | string;
   transactionPin: null | string;
   transactionPinCreated: boolean;
-
   dateJoined: string;
-
   gender: null | string;
   earnings: {
     id: string;
@@ -36,8 +33,13 @@ export interface IUser {
   isVerifiedUser: boolean;
   isFirstLogin: null | boolean;
   tourCompleted: null | boolean;
-  tagLastChangedAt: string;
-  hasUpdatedUser: boolean;
+  // Driver specific fields
+  vehicleType?: "car" | "keke" | "bus";
+  vehicleNumber?: string;
+  licenseNumber?: string;
+  isOnline?: boolean;
+  rating?: number;
+  totalTrips?: number;
 }
 
 export type IToken = {
