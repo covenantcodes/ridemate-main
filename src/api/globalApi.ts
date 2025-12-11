@@ -17,7 +17,10 @@ export const globalApi = createApi({
         headers.set("Authorization", `Bearer ${token}`);
       }
 
-      headers.set("Content-Type", "application/json");
+      if (endpoint !== "uploadDriverDocuments") {
+        headers.set("Content-Type", "application/json");
+      }
+
       return headers;
     },
   }),

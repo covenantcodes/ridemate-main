@@ -4,16 +4,17 @@ import {
   ONBOARDING,
   LOGIN,
   REGISTER,
-  //   FORGOT_PASSWORD,
-  //   RESET_PASSWORD,
+    DRIVER_DOCUMENT_UPLOAD    ,
+  EMAIL_VERIFICATION,
 } from "navigation/navigation.constants";
 import {AuthStackParams} from "navigation/navigation.types";
 import Onboarding from "screens/auth/onboarding/Onboarding";
 import Login from "screens/auth/login/Login";
 import Register from "screens/auth/register/Register";
 import {storageUtils} from "utils/storageUtils";
-// import ForgotPassword from "screens/auth/forgotPassword/ForgotPassword";
-// import ResetPassword from "screens/auth/resetPassword/ResetPassword";
+import DriverDocumentUpload from "screens/auth/driverDocuments/DriverDocumentUpload";
+import EmailVerification from "screens/auth/emailVerification/EmailVerification";
+
 
 const Stack = createNativeStackNavigator<AuthStackParams>();
 
@@ -40,8 +41,11 @@ const AuthStack = () => {
       <Stack.Screen name={ONBOARDING} component={Onboarding} />
       <Stack.Screen name={LOGIN} component={Login} />
       <Stack.Screen name={REGISTER} component={Register} />
-      {/* <Stack.Screen name={FORGOT_PASSWORD} component={ForgotPassword} /> */}
-      {/* <Stack.Screen name={RESET_PASSWORD} component={ResetPassword} /> */}
+  <Stack.Screen
+        name={DRIVER_DOCUMENT_UPLOAD}
+        component={DriverDocumentUpload}
+      />
+      <Stack.Screen name={EMAIL_VERIFICATION} component={EmailVerification} />
     </Stack.Navigator>
   );
 };

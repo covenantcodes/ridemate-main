@@ -35,6 +35,12 @@ export type AuthStackParams = {
   [ROUTES.ONBOARDING]: undefined;
   [ROUTES.LOGIN]: undefined;
   [ROUTES.REGISTER]: undefined;
+  [ROUTES.EMAIL_VERIFICATION]: {
+    userType?: "rider" | "driver";
+    userId: string;
+    email: string;
+  };
+  [ROUTES.DRIVER_DOCUMENT_UPLOAD]: {email: string; userId: string};
 };
 
 export type ScreenProps = NativeStackScreenProps<MainStackParams, "homeTab">;

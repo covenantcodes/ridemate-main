@@ -13,5 +13,7 @@ export const WALLET = "wallet";
 export const REGISTER = "register";
 export const LOGIN = "login";
 export const ONBOARDING = "onboarding";
+export const DRIVER_DOCUMENT_UPLOAD = "driverDocumentUpload";
+export const EMAIL_VERIFICATION = "emailVerification";
 export const VEHICLE_TYPE_SELECTION = "vehicleTypeSelection";
 export const FINDING_ROUTE = "findingRoute";

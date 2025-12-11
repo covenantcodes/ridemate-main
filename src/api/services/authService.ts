@@ -30,12 +30,32 @@ export const authApi = globalApi.injectEndpoints({
     }),
 
     // Verify Email
-    verifyEmail: builder.mutation<
-      ApiResponse,
-      {email: string; verificationCode: string}
-    >({
+    verifyEmail: builder.mutation<ApiResponse, {email: string; code: string}>({
       query: data => ({
         url: "/auth/verify-email",
+        method: "POST",
+        body: data,
+      }),
+    }),
+
+    // Upload Registration Documents (No Auth Required)
+    uploadRegistrationDocuments: builder.mutation<
+      {success: boolean; message: string; data?: any},
+      {
+        email: string;
+        driverLicense: string;
+        vehicleDocuments: string[];
+        profilePhoto: string;
+        vehicleType?: string;
+        vehicleMake?: string;
+        vehicleModel?: string;
+        vehicleNumber?: string;
+        vehicleColor?: string;
+        vehicleYear?: string;
+      }
+    >({
+      query: data => ({
+        url: "/auth/upload-registration-documents",
         method: "POST",
         body: data,
       }),
@@ -107,6 +127,7 @@ export const {
   useLoginMutation,
   useRegisterMutation,
   useVerifyEmailMutation,
+  useUploadRegistrationDocumentsMutation,
   useResendVerificationCodeMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,

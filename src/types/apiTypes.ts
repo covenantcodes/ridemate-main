@@ -13,6 +13,9 @@ export interface RegisterRequest {
   password: string;
   userType: "rider" | "driver";
   referralCode?: string;
+  vehicleType?: "car" | "keke" | "bus";
+  vehicleNumber?: string;
+  licenseNumber?: string;
 }
 
 export interface LoginResponse {

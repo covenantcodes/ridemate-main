@@ -170,7 +170,8 @@ const Login = () => {
           loading={isLoading} // Use RTK Query loading state
           disabled={isLoading || !email || !password}
           style={[globalStyles.mb2]}>
-          Sign In as {userType === "rider" ? "Rider" : "Driver"}
+          Sign In 
+          {/* as {userType === "rider" ? "Rider" : "Driver"} */}
         </Button>
         <AuthFooter
           text="Don't have an account?"

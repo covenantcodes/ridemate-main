@@ -17,13 +17,7 @@ import {Provider} from "react-redux";
 import {PersistGate} from "redux-persist/integration/react";
 import {persistor, store} from "store/store";
 import RootNavigation from "navigation/RootNavigation";
-import {View} from "react-native";
-
-import HomeTabs from "navigation/HomeTabs";
-import LoginScreen from "screens/auth/login/Login";
-import ProductDetails from "screens/marketplace/screens/ProductDetails";
-
-const Stack = createNativeStackNavigator<MainStackParams>();
+import {AlertProvider} from "contexts/AlertContext";
 
 const App = () => {
   const [fontsLoaded] = useFonts({
@@ -48,15 +42,17 @@ const App = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <GestureHandlerRootView style={{flex: 1}}>
-          <SafeAreaProvider>
-            <NavigationContainer>
-              <StatusBar style="auto" />
-              <RootNavigation />
-            </NavigationContainer>
-            <Toast config={toastConfig} />
-          </SafeAreaProvider>
-        </GestureHandlerRootView>
+        <AlertProvider>
+          <GestureHandlerRootView style={{flex: 1}}>
+            <SafeAreaProvider>
+              <NavigationContainer>
+                <StatusBar style="auto" />
+                <RootNavigation />
+              </NavigationContainer>
+              <Toast config={toastConfig} />
+            </SafeAreaProvider>
+          </GestureHandlerRootView>
+        </AlertProvider>
       </PersistGate>
     </Provider>
   );
