@@ -1,11 +1,11 @@
 // Main stack screens
 export const HOME_TAB = "homeTab";
 export const PRODUCT_DETAILS = "productDetails";
-// ... other screen names
 
 // Tab screens
 export const HOME = "home";
-export const HISTORY = "marketplace";
+export const HISTORY = "history";
+export const RIDES = "rides";
 export const PROFILE = "profile";
 export const WALLET = "wallet";
 

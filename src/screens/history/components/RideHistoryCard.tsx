@@ -46,7 +46,7 @@ const RideHistoryCard: React.FC<RideHistoryCardProps> = ({item, onPress}) => {
       case "car":
         return "car-sport";
       case "keke":
-        return "bicycle";
+        return "car";
       case "bus":
         return "bus";
       default:

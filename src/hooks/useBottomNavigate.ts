@@ -4,6 +4,7 @@ import {
   WALLET,
   HISTORY,
   PROFILE,
+  RIDES,
 } from "navigation/navigation.constants";
 import {useAppNavigation} from "./useAppNavigation";
 
@@ -22,6 +23,10 @@ export const useBottomNavigate = () => {
     navigation.navigate(HOME_TAB, {screen: HISTORY});
   };
 
+  const navigateToRides = () => {
+    navigation.navigate(HOME_TAB, {screen: RIDES});
+  };
+
   const navigateToProfile = () => {
     navigation.navigate(HOME_TAB, {screen: PROFILE});
   };
@@ -31,5 +36,6 @@ export const useBottomNavigate = () => {
     navigateToWallet,
     navigateToHistory,
     navigateToProfile,
+    navigateToRides,
   };
 };

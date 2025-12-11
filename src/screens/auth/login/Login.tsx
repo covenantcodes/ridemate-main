@@ -1,40 +1,62 @@
 import React, {useState} from "react";
+import {View, Alert} from "react-native";
+import {useDispatch} from "react-redux";
 import Layout from "components/shared/view/Layout";
 import {globalStyles} from "styles/globalStyles";
 import Button from "components/shared/button/Button";
 import TouchableComponent from "components/shared/touchable/Touchable";
 import InputView from "components/shared/view/InputView";
-import {HOME_TAB, REGISTER} from "navigation/navigation.constants";
+import {REGISTER} from "navigation/navigation.constants";
 import {useAppNavigation} from "hooks/useAppNavigation";
 import AuthHeader from "components/auth/AuthHeader";
 import AuthFooter from "components/auth/AuthFooter";
 import Input from "components/shared/input/Input";
 import Text from "components/shared/text/Text";
 import {FONT_WEIGHTS, FONTS_SIZES} from "constants/scaling";
-import {useAppDispatch} from "store/hooks";
 import {setAuth} from "./login.slice";
+import {useLoginMutation} from "api/services/authService";
+import {colors} from "theme/themes";
+import {getSize} from "utils/unitScaling";
 
 const Login = () => {
   const {authNavigation, navigation} = useAppNavigation();
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [userType, setUserType] = useState<"rider" | "driver">("rider");
 
-  const handleLogin = () => {
-    setLoading(true);
-    console.log("Login:", {email, password});
+  // RTK Query mutation
+  const [login, {isLoading}] = useLoginMutation();
 
-    setTimeout(() => {
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert("Error", "Please fill in all fields");
+      return;
+    }
+
+    try {
+      const result = await login({
+        email: email.toLowerCase().trim(),
+        password,
+        userType,
+      }).unwrap();
+
+      // Store auth data in Redux
       dispatch(
         setAuth({
-          token: "dummy-access-token",
-          user: {email},
+          accessToken: result.data.tokens.accessToken,
+          refreshToken: result.data.tokens.refreshToken,
+          user: result.data.user,
         }),
       );
-      setLoading(false);
-    }, 2000);
+    } catch (error: any) {
+      console.error("Login error:", error);
+      Alert.alert(
+        "Login Failed",
+        error?.data?.message || "Invalid credentials. Please try again.",
+      );
+    }
   };
 
   return (
@@ -44,6 +66,68 @@ const Login = () => {
           title="Welcome Back"
           subtitle="Sign in to continue to RideMate"
         />
+
+        {/* User Type Selection */}
+        {/* <View style={[globalStyles.mb3]}>
+          <Text
+            font={FONT_WEIGHTS.semiBold}
+            size={FONTS_SIZES.S}
+            style={[globalStyles.mb1]}>
+            I am a
+          </Text>
+
+          <View style={[globalStyles.flexRow, {gap: getSize(12)}]}>
+            <TouchableComponent
+              bounce
+              onPress={() => setUserType("rider")}
+              style={[
+                globalStyles.py05,
+                globalStyles.px2,
+
+                {
+                  backgroundColor:
+                    userType === "rider" ? colors.primary : colors.white,
+                  borderRadius: getSize(12),
+                  borderWidth: 2,
+                  borderColor:
+                    userType === "rider" ? colors.primary : colors.gray200,
+                },
+              ]}>
+              <Text
+                font={FONT_WEIGHTS.semiBold}
+                size={FONTS_SIZES.S}
+                color={userType === "rider" ? "white" : "gray600"}>
+                Rider
+              </Text>
+            </TouchableComponent>
+
+            <TouchableComponent
+              bounce
+              onPress={() => setUserType("driver")}
+              style={[
+                globalStyles.py05,
+                globalStyles.px2,
+                {
+                  backgroundColor:
+                    userType === "driver" ? colors.primary : colors.white,
+                  borderRadius: getSize(12),
+                  borderWidth: 2,
+                  borderColor:
+                    userType === "driver" ? colors.primary : colors.gray200,
+                },
+              ]}>
+              <Text
+                font={FONT_WEIGHTS.semiBold}
+                size={FONTS_SIZES.S}
+                style={{
+                  color: userType === "driver" ? colors.white : colors.gray600,
+                }}>
+                Driver
+              </Text>
+            </TouchableComponent>
+          </View>
+        </View> */}
+
         <Input
           label="Email"
           iconType="MaterialIcons"
@@ -83,10 +167,10 @@ const Login = () => {
 
         <Button
           onPress={handleLogin}
-          loading={loading}
-          disabled={loading || !email || !password}
+          loading={isLoading} // Use RTK Query loading state
+          disabled={isLoading || !email || !password}
           style={[globalStyles.mb2]}>
-          Sign In
+          Sign In as {userType === "rider" ? "Rider" : "Driver"}
         </Button>
         <AuthFooter
           text="Don't have an account?"

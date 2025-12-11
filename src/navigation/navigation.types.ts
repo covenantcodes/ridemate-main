@@ -26,6 +26,7 @@ export type MainStackParams = {
 export type TabNavigationParams = {
   [ROUTES.HOME]: undefined;
   [ROUTES.HISTORY]: undefined;
+  [ROUTES.RIDES]: undefined;
   [ROUTES.PROFILE]: undefined;
   [ROUTES.WALLET]: undefined;
 };

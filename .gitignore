@@ -40,5 +40,6 @@ yarn-error.*
 /ios
 /android
 /RideMate.app 
+/RideMateDev.app 
 
 .tar.gz

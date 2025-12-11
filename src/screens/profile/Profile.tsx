@@ -11,6 +11,10 @@ import {getSize} from "utils/unitScaling";
 import {appStyles} from "styles/appStyles";
 import {DEFAULT_IMAGE_URI} from "constants/constants";
 import {useAppNavigation} from "hooks/useAppNavigation";
+import {useAppDispatch, useAppSelector} from "store/hooks";
+import {logout} from "screens/auth/login/login.slice";
+import LogoutModal from "./components/LogoutModal";
+import ProfileMenuItem from "./components/ProfileMenuItem";
 
 interface MenuItem {
   id: string;
@@ -24,24 +28,46 @@ interface MenuItem {
 
 const Profile = () => {
   const {navigation} = useAppNavigation();
-  const [user] = useState({
-    name: "John Doe",
-    email: "johndoe@example.com",
-    phone: "+234 812 345 6789",
-    avatar: DEFAULT_IMAGE_URI,
-    memberSince: "Jan 2025",
-    totalRides: 45,
-    rating: 4.8,
-  });
+  const dispatch = useAppDispatch();
+  const {user} = useAppSelector(state => state.login);
+
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [logoutLoading, setLogoutLoading] = useState(false);
 
   const handleEditProfile = () => {
     console.log("Edit profile pressed");
     // Navigate to edit profile screen
   };
 
-  const handleLogout = () => {
-    console.log("Logout pressed");
-    // Show logout confirmation modal
+  const handleLogoutPress = () => {
+    setShowLogoutModal(true);
+  };
+
+  const handleLogoutConfirm = async () => {
+    setLogoutLoading(true);
+
+    try {
+      // Simulate API call to logout (clear server-side session, invalidate token, etc.)
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
+      // Clear Redux state
+      dispatch(logout());
+
+      // Close modal
+      setShowLogoutModal(false);
+      setLogoutLoading(false);
+
+      // Navigation to login will happen automatically via RootNavigation
+      // because accessToken will be null after logout
+    } catch (error) {
+      console.error("Logout error:", error);
+      setLogoutLoading(false);
+      setShowLogoutModal(false);
+    }
+  };
+
+  const handleLogoutCancel = () => {
+    setShowLogoutModal(false);
   };
 
   const menuItems: MenuItem[] = [
@@ -98,82 +124,6 @@ const Profile = () => {
     },
   ];
 
-  const renderMenuItem = (item: MenuItem) => (
-    <TouchableComponent
-      key={item.id}
-      bounce
-      onPress={item.onPress}
-      style={[
-        globalStyles.flexRow,
-        globalStyles.alignItemsCenter,
-        globalStyles.justifyBetween,
-        globalStyles.px2,
-        globalStyles.py2,
-        globalStyles.mb1,
-        {
-          backgroundColor: colors.white,
-          borderRadius: getSize(12),
-          borderWidth: 1,
-          borderColor: colors.gray200,
-        },
-      ]}>
-      <View style={[globalStyles.flexRow, globalStyles.alignItemsCenter]}>
-        <View
-          style={[
-            globalStyles.flexCenter,
-            {
-              width: getSize(40),
-              height: getSize(40),
-              borderRadius: getSize(20),
-              backgroundColor: colors.primary + "10",
-            },
-          ]}>
-          <MainIcon
-            type={item.iconType}
-            name={item.icon}
-            size={getSize(20)}
-            color={colors.primary}
-          />
-        </View>
-        <Text
-          font={FONT_WEIGHTS.semiBold}
-          size={FONTS_SIZES.S}
-          style={[globalStyles.ml2]}>
-          {item.title}
-        </Text>
-      </View>
-      <View style={[globalStyles.flexRow, globalStyles.alignItemsCenter]}>
-        {item.showBadge && item.badgeCount && (
-          <View
-            style={[
-              globalStyles.flexCenter,
-              {
-                minWidth: getSize(20),
-                height: getSize(20),
-                borderRadius: getSize(10),
-                backgroundColor: colors.error,
-                marginRight: getSize(8),
-                paddingHorizontal: getSize(6),
-              },
-            ]}>
-            <Text
-              font={FONT_WEIGHTS.bold}
-              size={FONTS_SIZES.XXS}
-              style={{color: colors.white}}>
-              {item.badgeCount}
-            </Text>
-          </View>
-        )}
-        <MainIcon
-          type="Ionicons"
-          name="chevron-forward"
-          size={getSize(20)}
-          color={colors.gray400}
-        />
-      </View>
-    </TouchableComponent>
-  );
-
   return (
     <Layout noPadding>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -213,7 +163,7 @@ const Profile = () => {
               ]}>
               <View style={{position: "relative"}}>
                 <Image
-                  source={{uri: user.avatar}}
+                  source={{uri: user?.avatar || DEFAULT_IMAGE_URI}}
                   style={{
                     width: getSize(80),
                     height: getSize(80),
@@ -250,19 +200,19 @@ const Profile = () => {
 
               <View style={[globalStyles.ml2, globalStyles.flex]}>
                 <Text font={FONT_WEIGHTS.bold} size={FONTS_SIZES.L}>
-                  {user.name}
+                  {user?.fullname || "User"}
                 </Text>
                 <Text
                   font={FONT_WEIGHTS.regular}
                   size={FONTS_SIZES.S}
                   color="gray600">
-                  {user.email}
+                  {user?.email || "email@example.com"}
                 </Text>
                 <Text
                   font={FONT_WEIGHTS.regular}
                   size={FONTS_SIZES.S}
                   color="gray600">
-                  {user.phone}
+                  {user?.phone || "+234 XXX XXX XXXX"}
                 </Text>
                 <View
                   style={[
@@ -281,7 +231,13 @@ const Profile = () => {
                     size={FONTS_SIZES.XS}
                     color="gray600"
                     style={[globalStyles.ml05]}>
-                    Member since {user.memberSince}
+                    Member since{" "}
+                    {user?.dateJoined
+                      ? new Date(user.dateJoined).toLocaleDateString("en-US", {
+                          month: "short",
+                          year: "numeric",
+                        })
+                      : "Jan 2025"}
                   </Text>
                 </View>
               </View>
@@ -301,7 +257,7 @@ const Profile = () => {
               ]}>
               <View style={[globalStyles.alignItemsCenter]}>
                 <Text font={FONT_WEIGHTS.bold} size={FONTS_SIZES.XL}>
-                  {user.totalRides}
+                  {user?.totalTrips || 45}
                 </Text>
                 <Text
                   font={FONT_WEIGHTS.medium}
@@ -331,7 +287,7 @@ const Profile = () => {
                     font={FONT_WEIGHTS.bold}
                     size={FONTS_SIZES.XL}
                     style={[globalStyles.ml05]}>
-                    {user.rating}
+                    {user?.rating || 4.8}
                   </Text>
                 </View>
                 <Text
@@ -404,14 +360,16 @@ const Profile = () => {
             style={[globalStyles.mb2]}>
             Account Settings
           </Text>
-          {menuItems.map(item => renderMenuItem(item))}
+          {menuItems.map(item => (
+            <ProfileMenuItem key={item.id} item={item} />
+          ))}
         </View>
 
         {/* Logout Button */}
         <View style={[globalStyles.px2, globalStyles.mb3]}>
           <TouchableComponent
             bounce
-            onPress={handleLogout}
+            onPress={handleLogoutPress}
             style={[
               globalStyles.flexRow,
               globalStyles.alignItemsCenter,
@@ -450,6 +408,14 @@ const Profile = () => {
           </Text>
         </View>
       </ScrollView>
+
+      {/* Logout Confirmation Modal */}
+      <LogoutModal
+        visible={showLogoutModal}
+        onConfirm={handleLogoutConfirm}
+        onCancel={handleLogoutCancel}
+        loading={logoutLoading}
+      />
     </Layout>
   );
 };
